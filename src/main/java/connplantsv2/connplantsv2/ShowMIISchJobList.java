@@ -13,7 +13,7 @@ public class ShowMIISchJobList {
 		String result="";
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con=DriverManager.getConnection( "jdbc:mysql://connplantsdb:3306/smmtdb?user=root&password=VySU8WBweuVYNx3T&useSSL=false");  
+			Connection con=DriverManager.getConnection( "jdbc:mysql://connplantservice:3306/connplantsdb?user=root&password=VySU8WBweuVYNx3T&useSSL=false");  
 			Statement stmt=con.createStatement();  
 			ResultSet rs=stmt.executeQuery("SELECT * FROM `SHOP_ORDER`");  
 			while(rs.next()){  
