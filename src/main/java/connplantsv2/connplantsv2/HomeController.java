@@ -42,7 +42,7 @@ public class HomeController {
       return "redirect:/login";
     }
 	
-	@GetMapping("/welcome")
+	@PostMapping("/welcome")
     public String index1() {
       return "welcome";
     }
