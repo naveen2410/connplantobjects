@@ -70,7 +70,7 @@ public class HomeController {
 	    }
 	  */
 	  
-	  @GetMapping("/display")
+	  @PostMapping("/display")
 	    public String getMIISchJob(@ModelAttribute Login login, Model model) {
 	      
 		  List<MIISchJob> listMIISchJobs = new ArrayList<MIISchJob>();
