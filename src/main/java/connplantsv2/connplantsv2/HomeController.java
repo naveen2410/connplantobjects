@@ -44,7 +44,7 @@ public class HomeController {
 	
 	@GetMapping("/welcome")
     public String index1() {
-      return "redirect:/welcome";
+      return "welcome";
     }
 	
 	@GetMapping("/login")
