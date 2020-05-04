@@ -2,13 +2,20 @@ package connplantsv2.connplantsv2;
 
 public class Login {
 
+	private String site;
 	private String ip;
 	private String port;
 	private String user;
 	private String password;
 	private String stringURL;
+	
 
-
+	public String getSite() {
+		return site;
+	}
+	public void setSite(String site) {
+		this.site = site;
+	}
 	public String getIp() {
 		return ip;
 	}

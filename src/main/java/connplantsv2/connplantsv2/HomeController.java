@@ -49,7 +49,7 @@ public class HomeController {
 	  public String loginSubmit(@ModelAttribute Login login) {
 		  
 		  //String StrURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?service=scheduler&mode=List&content-type=text/xml&IllumLoginName=" + login.getUser() + "&IllumLoginPassword=" + login.getPassword();
-		  String StrURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/ProductionOrder/SQL_GetShopOrderDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
+		  String StrURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/ProductionOrder/SQL_GetShopOrderDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
 		  try {
 			login.setStringURL(new GetMIIResponse().executeGETService(StrURL));
 		} catch (IOException e) {
