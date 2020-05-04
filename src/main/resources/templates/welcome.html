@@ -12,6 +12,15 @@
     
     <p><a href="/display">Order Details</a></p>
     
+    
+    <div class="" style="width:100%" align="center"> 
+	<h1>Please Enter Site to see Order details</h1>
+    <form action="#" th:action="@{/display}" th:object="${login}" method="post">
+     	<p>Site: <input type="text" th:field="*{site}" /></p>
+        <p><input type="submit" value="Save" /> <input type="reset" value="Reset" /></p>
+    </form>
+   </div>
+    
 
 </body>
 </html>

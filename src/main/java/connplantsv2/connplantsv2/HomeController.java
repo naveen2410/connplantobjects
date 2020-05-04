@@ -71,14 +71,14 @@ public class HomeController {
 	  */
 	  
 	  @GetMapping("/display")
-	    public String getMIISchJob(Model model) {
+	    public String getMIISchJob(@ModelAttribute Login login, Model model) {
 	      
 		  List<MIISchJob> listMIISchJobs = new ArrayList<MIISchJob>();
 		  
 		  //DisplayMIISchJob displayMIIjob = new DisplayMIISchJob();
 		  ShowMIISchJobList displayMIIjob = new ShowMIISchJobList();
 		  try {
-			displayMIIjob.displayMIISchJobs(listMIISchJobs, login1.getSite());
+			displayMIIjob.displayMIISchJobs(listMIISchJobs, login.getSite());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
