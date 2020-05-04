@@ -42,6 +42,11 @@ public class HomeController {
       return "redirect:/login";
     }
 	
+	@GetMapping("/welcome")
+    public String index1() {
+      return "redirect:/welcome";
+    }
+	
 	@GetMapping("/login")
 	  public String loginForm(Model model) {
 	    model.addAttribute("login", new Login());
