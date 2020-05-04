@@ -26,13 +26,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
 public class HomeController {
 
-	
+	Login login1 = new Login();
 	
 	@GetMapping
     public String index() {
@@ -47,7 +50,7 @@ public class HomeController {
 	
 	  @PostMapping("/login")
 	  public String loginSubmit(@ModelAttribute Login login) {
-		  
+		  login1 = login;
 		  //String StrURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?service=scheduler&mode=List&content-type=text/xml&IllumLoginName=" + login.getUser() + "&IllumLoginPassword=" + login.getPassword();
 		  String StrURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/ProductionOrder/SQL_GetShopOrderDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
 		  try {
@@ -60,6 +63,13 @@ public class HomeController {
 		  return "welcome";
 	  }
 	  
+	  
+	 /* @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	    public String ipaddress(@PathVariable("id") String id) throws Exception {
+	        return "Reply: " + id;
+	    }
+	  */
+	  
 	  @GetMapping("/display")
 	    public String getMIISchJob(Model model) {
 	      
@@ -68,7 +78,7 @@ public class HomeController {
 		  //DisplayMIISchJob displayMIIjob = new DisplayMIISchJob();
 		  ShowMIISchJobList displayMIIjob = new ShowMIISchJobList();
 		  try {
-			displayMIIjob.displayMIISchJobs(listMIISchJobs);
+			displayMIIjob.displayMIISchJobs(listMIISchJobs, login1.getSite());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -9,13 +9,13 @@ import java.util.List;
 
 public class ShowMIISchJobList {
 
-	public String displayMIISchJobs(List<MIISchJob> listMIISchJobs1) throws IOException{
+	public String displayMIISchJobs(List<MIISchJob> listMIISchJobs1, String site1) throws IOException{
 		String result="";
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con=DriverManager.getConnection( "jdbc:mysql://connplantservice:3306/connplantsdb?user=root&password=VySU8WBweuVYNx3T&useSSL=false");  
 			Statement stmt=con.createStatement();  
-			ResultSet rs=stmt.executeQuery("SELECT * FROM `SHOP_ORDER`");  
+			ResultSet rs=stmt.executeQuery("SELECT * FROM `SHOP_ORDER` where SITE = '"+site1+"'");  
 			while(rs.next()){  
 				
 			
