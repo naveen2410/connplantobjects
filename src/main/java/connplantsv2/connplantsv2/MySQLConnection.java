@@ -73,44 +73,22 @@ public class MySQLConnection {
 		return returnMsg;
 	}
 
-
-/*
-
-	public String dbConn1(String userName, String Password)
-	{
+	public String insertMIIOperationData(String site, String shoporder, String sfc, String operation, String router,
+			String material, String workcenter, String qty_queue, String qty_work, String qty_complete,
+			String step_id) {
 		String returnMsg = "" ;
-		System.out.println("Program started");
-		returnMsg = returnMsg + "Program started"+ "/n";
+		String sql = "";
 		try
 		{
-			Class.forName(jdbcDriver).newInstance();
-			System.out.println("JDBC driver loaded successfully 2!");
-			returnMsg = returnMsg + "JDBC driver loaded successfully!"+ "/n";
-		}
-		catch (Exception err)
-		{
-			System.err.println("Error loading JDBC driver");
-			returnMsg = returnMsg + "Error loading JDBC driver"+ "/n";
-			err.printStackTrace(System.err);
-			System.exit(0);
-		}
-
-		Connection databaseConnection= null;
-		try
-		{
-			//Connect to the database
-			databaseConnection = DriverManager.getConnection(dbURL,userName,Password);
-			System.out.println("Connected to the database successfully 2!");
+			Statement stmt = getDBConnectionStatement();
+			sql = "INSERT OPERATION VALUES ('"+site+"', '"+shoporder+"', '"+sfc+"', '"+operation+"', '"+router+"', '"+material+"', '"+workcenter+"', "+qty_queue+", "+qty_work+" , "+qty_complete+", '"+step_id+"')";
+			stmt.execute(sql);
 			System.out.println("Closing database connection");
-			returnMsg = returnMsg + "Error loading JDBC driver"+ "/n" + "Closing database connection";
-
-			//close the database connection
-			databaseConnection.close();
 		}
 		catch (SQLException err)
 		{
-			System.err.println("Error connecting to the database 1!");
-			returnMsg = "ERROR - " + returnMsg + "Error connecting to the database" + "/n";
+			System.err.println("Error connecting to the database");
+			returnMsg = "ERROR " + sql;
 			err.printStackTrace(System.err);
 			return returnMsg;
 			// System.exit(0);
@@ -119,6 +97,5 @@ public class MySQLConnection {
 		System.out.println("Program finished");
 		return returnMsg;
 	}
-*/
 
 }
