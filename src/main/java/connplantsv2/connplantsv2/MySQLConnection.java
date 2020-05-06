@@ -56,7 +56,7 @@ public class MySQLConnection {
 		try
 		{
 			Statement stmt = getDBConnectionStatement();
-			sql = "INSERT SFC VALUES ('"+site+"', '"+sfc+"', '"+shoporder+"', '"+qty+"', '"+qty_done+"' , '"+qty_scrapped+"', '"+status+"', '"+modified_dt+"')";
+			sql = "INSERT SFC VALUES ('"+site+"', '"+sfc+"', '"+shoporder+"', "+qty+", "+qty_done+" , "+qty_scrapped+", '"+status+"', '"+modified_dt+"')";
 			stmt.execute(sql);
 			System.out.println("Closing database connection");
 		}
