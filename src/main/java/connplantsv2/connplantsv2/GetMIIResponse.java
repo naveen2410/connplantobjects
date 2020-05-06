@@ -123,7 +123,7 @@ public class GetMIIResponse {
 	           Element line = (Element) nl.item(0);
 	           String site = getCharacterDataFromElement(line);
 
-	           nl = element.getElementsByTagName("SHOP_ORDER");
+	           nl = element.getElementsByTagName("SHOP_ORDER_BO");
 	           line = (Element) nl.item(0);
 	           String shoporder = getCharacterDataFromElement(line);
 	           
