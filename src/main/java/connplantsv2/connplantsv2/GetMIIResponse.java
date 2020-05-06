@@ -59,9 +59,17 @@ public class GetMIIResponse {
 	           line = (Element) nl.item(0);
 	           String shoporder = getCharacterDataFromElement(line);
 	           
+	           nl = element.getElementsByTagName("HANDLE");
+	           line = (Element) nl.item(0);
+	           String handle = getCharacterDataFromElement(line);
+	           
 	           nl = element.getElementsByTagName("ITEM_BO");
 	           line = (Element) nl.item(0);
 	           String item = getCharacterDataFromElement(line);
+	           
+	           nl = element.getElementsByTagName("PLANNED_ROUTER_BO");
+	           line = (Element) nl.item(0);
+	           String router = getCharacterDataFromElement(line);
 	           
 	           nl = element.getElementsByTagName("QTY_TO_BUILD");
 	           line = (Element) nl.item(0);
@@ -80,7 +88,7 @@ public class GetMIIResponse {
 	           String modified_dt = getCharacterDataFromElement(line);
 	           
 	           MySQLConnection myserverCon = new MySQLConnection();
-	           String returnMsg = myserverCon.insertMIIShopOrderData(site, shoporder, item, qty_to_build, qty_done, qty_scrapped, modified_dt);
+	           String returnMsg = myserverCon.insertMIIShopOrderData(site, shoporder, item, qty_to_build, qty_done, qty_scrapped, modified_dt, router, handle);
 	           
 	         
 		       System.out.println("Data is inserted "+returnMsg);

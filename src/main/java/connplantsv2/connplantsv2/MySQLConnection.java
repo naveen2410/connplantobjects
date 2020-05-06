@@ -25,12 +25,12 @@ public class MySQLConnection {
 		return stmt;
 	}
 
-	public String insertMIIShopOrderData(String site, String shoporder, String item, String qty_to_build, String qty_done, String qty_scrapped, String modified_dt) {
+	public String insertMIIShopOrderData(String site, String shoporder, String item, String qty_to_build, String qty_done, String qty_scrapped, String modified_dt, String router, String handle) {
 		String returnMsg = "" ;
 		try
 		{
 			Statement stmt = getDBConnectionStatement();
-			String sql = "INSERT SHOP_ORDER VALUES ('"+site+"','"+shoporder+"','"+item+"','"+qty_to_build+"','"+qty_done+"','"+qty_scrapped+"','"+modified_dt+"')";
+			String sql = "INSERT SHOP_ORDER VALUES ('"+site+"','"+shoporder+"','"+item+"','"+qty_to_build+"','"+qty_done+"','"+qty_scrapped+"','"+modified_dt+"','"+router+"','"+handle+"')";
 			stmt.execute(sql);
 			System.out.println("Closing database connection");
 		}
