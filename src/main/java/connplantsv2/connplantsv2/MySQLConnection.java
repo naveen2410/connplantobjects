@@ -52,17 +52,18 @@ public class MySQLConnection {
 
 	public String insertMIISFCData(String site, String shoporder, String sfc, String status, String qty, String  qty_done, String qty_scrapped, String modified_dt) {
 		String returnMsg = "" ;
+		String sql = "";
 		try
 		{
 			Statement stmt = getDBConnectionStatement();
-			String sql = "INSERT SFC VALUES ('"+site+"', '"+sfc+"', '"+shoporder+"', '"+qty+"', '"+qty_done+"' , '"+qty_scrapped+"', '"+status+"', '"+modified_dt+"')";
+			sql = "INSERT SFC VALUES ('"+site+"', '"+sfc+"', '"+shoporder+"', '"+qty+"', '"+qty_done+"' , '"+qty_scrapped+"', '"+status+"', '"+modified_dt+"')";
 			stmt.execute(sql);
 			System.out.println("Closing database connection");
 		}
 		catch (SQLException err)
 		{
 			System.err.println("Error connecting to the database");
-			returnMsg = "ERROR";
+			returnMsg = "ERROR " + sql;
 			err.printStackTrace(System.err);
 			return returnMsg;
 			// System.exit(0);
