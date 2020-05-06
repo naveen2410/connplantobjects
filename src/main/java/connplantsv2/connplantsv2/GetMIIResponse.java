@@ -305,6 +305,66 @@ public class GetMIIResponse {
 
 		return outValue;
 	}
+	
+	public String executeResourceService(String resourceURL) throws IOException{
+		String outValue = null;
+
+		URL url = new URL(resourceURL);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		InputStream in = conn.getInputStream();
+
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Document doc = null;
+		try {
+			doc = (Document) db.parse(in);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		NodeList nodes = ((org.w3c.dom.Document) doc).getElementsByTagName("Row");
+
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Element element = (Element) nodes.item(i);
+
+			NodeList nl = element.getElementsByTagName("SITE");
+			Element line = (Element) nl.item(0);
+			String site = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("RESRCE");
+			line = (Element) nl.item(0);
+			String resource = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("RES_DESC");
+			line = (Element) nl.item(0);
+			String res_desc = getCharacterDataFromElement(line);
+			
+			nl = element.getElementsByTagName("WORK_CENTER_BO");
+			line = (Element) nl.item(0);
+			String workcenter = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("WC_DESC");
+			line = (Element) nl.item(0);
+			String wc_desc = getCharacterDataFromElement(line);
+
+			MySQLConnection myserverCon = new MySQLConnection();
+			String returnMsg = myserverCon.insertMIIResourceData(site, resource, res_desc, workcenter, wc_desc);
+
+
+			System.out.println("Data is inserted "+returnMsg);
+		}
+
+		return outValue;
+	}
 
 
 	public static String getCharacterDataFromElement(Element e) {
@@ -316,6 +376,8 @@ public class GetMIIResponse {
 		}
 		return "?";
 	}
+
+
 
 	
 

@@ -121,4 +121,28 @@ public class MySQLConnection {
 		return returnMsg;
 	}
 
+	public String insertMIIResourceData(String site, String resource, String res_desc, String workcenter,
+			String wc_desc) {
+		String returnMsg = "" ;
+		String sql = "";
+		try
+		{
+			Statement stmt = getDBConnectionStatement();
+			sql = "INSERT RESOURCE_MASTER VALUES ('"+site+"', '"+resource+"', '"+res_desc+"', '"+workcenter+"', '"+wc_desc+"')";
+			stmt.execute(sql);
+			System.out.println("Closing database connection");
+		}
+		catch (SQLException err)
+		{
+			System.err.println("Error connecting to the database");
+			returnMsg = "ERROR " + sql;
+			err.printStackTrace(System.err);
+			return returnMsg;
+			// System.exit(0);
+		}
+		returnMsg = "SUCCESS";
+		System.out.println("Program finished");
+		return returnMsg;
+	}
+
 }
