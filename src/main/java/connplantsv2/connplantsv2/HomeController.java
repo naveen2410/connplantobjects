@@ -59,11 +59,14 @@ public class HomeController {
 		  String SOURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/ProductionOrder/SQL_GetShopOrderDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
 		  String SFCURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/SFC/SQL_GetSFCDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
 		  String OperationURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Runner?Transaction=Default/Som/OCP_ConnPlants/Operation/BLS_GetOrderOperationStepDetails&SITE="+login.getSite()+"&FROMDT=10/10/2019%2000:00:00&OutputParameter=XMLResult&Content-type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
+		  String SiteURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?QueryTemplate=Default%2FSom%2FOCP_ConnPlants%2FSite%2FSQL_GetSiteDetails&IsTesting=T&Content-Type=text%2Fxml&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
+		  
 		  
 		  try {
 			login.setStringURL(new GetMIIResponse().executeShopOrderGETService(SOURL));
 			login.setStringURL(new GetMIIResponse().executeSFCGETService(SFCURL));
-			login.setStringURL(new GetMIIResponse().executeSFCOperationService(OperationURL));
+			login.setStringURL(new GetMIIResponse().executeOperationService(OperationURL));
+			login.setStringURL(new GetMIIResponse().executeSiteService(SiteURL));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

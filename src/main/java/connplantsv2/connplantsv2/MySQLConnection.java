@@ -98,4 +98,27 @@ public class MySQLConnection {
 		return returnMsg;
 	}
 
+	public String insertMIISiteData(String site, String description, String time_zone) {
+		String returnMsg = "" ;
+		String sql = "";
+		try
+		{
+			Statement stmt = getDBConnectionStatement();
+			sql = "INSERT SITE VALUES ('"+site+"', '"+description+"', '"+time_zone+"')";
+			stmt.execute(sql);
+			System.out.println("Closing database connection");
+		}
+		catch (SQLException err)
+		{
+			System.err.println("Error connecting to the database");
+			returnMsg = "ERROR " + sql;
+			err.printStackTrace(System.err);
+			return returnMsg;
+			// System.exit(0);
+		}
+		returnMsg = "SUCCESS";
+		System.out.println("Program finished");
+		return returnMsg;
+	}
+
 }
