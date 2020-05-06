@@ -104,7 +104,7 @@ public class MySQLConnection {
 		try
 		{
 			Statement stmt = getDBConnectionStatement();
-			sql = "INSERT SITE VALUES ('"+site+"', '"+description+"', '"+time_zone+"')";
+			sql = "INSERT SITE_MASTER VALUES ('"+site+"', '"+description+"', '"+time_zone+"')";
 			stmt.execute(sql);
 			System.out.println("Closing database connection");
 		}
