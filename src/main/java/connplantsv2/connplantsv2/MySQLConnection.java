@@ -16,22 +16,23 @@ public class MySQLConnection {
 	private static final String dbURLwithUserPswd = dbURL + "?user=" + user + "&password=" + pass + "&useSSL=false";
 
 
-	private Statement getDBConnectionStatement() throws SQLException {
+	public Statement getDBConnectionStatement() throws SQLException {
 		Connection databaseConnection= null;
 
 		databaseConnection = DriverManager.getConnection(dbURLwithUserPswd);
 
 		Statement stmt = databaseConnection.createStatement();
 		return stmt;
+		//databaseConnection.close();
 	}
 
-	public String insertMIIShopOrderData(String site, String shoporder, String item, String qty_to_build, String qty_done, String qty_scrapped, String modified_dt, String router, String handle) {
+	public String insertMIIShopOrderData(String site, String shoporder, String item, String qty_to_build, String qty_done, String qty_scrapped, String modified_dt, String router, String handle, Statement stmt2) {
 		String returnMsg = "" ;
 		try
 		{
-			Statement stmt = getDBConnectionStatement();
+			//Statement stmt = getDBConnectionStatement();
 			String sql = "INSERT SHOP_ORDER VALUES ('"+site+"','"+shoporder+"','"+item+"','"+qty_to_build+"','"+qty_done+"','"+qty_scrapped+"','"+modified_dt+"','"+router+"','"+handle+"')";
-			stmt.execute(sql);
+			stmt2.execute(sql);
 			System.out.println("Closing database connection");
 		}
 		catch (SQLException err)
@@ -50,14 +51,14 @@ public class MySQLConnection {
 	}
 
 
-	public String insertMIISFCData(String site, String shoporder, String sfc, String status, String qty, String  qty_done, String qty_scrapped, String modified_dt) {
+	public String insertMIISFCData(String site, String shoporder, String sfc, String status, String qty, String  qty_done, String qty_scrapped, String modified_dt, Statement stmt2) {
 		String returnMsg = "" ;
 		String sql = "";
 		try
 		{
-			Statement stmt = getDBConnectionStatement();
+			//Statement stmt = getDBConnectionStatement();
 			sql = "INSERT SFC VALUES ('"+site+"', '"+sfc+"', '"+shoporder+"', "+qty+", "+qty_done+" , "+qty_scrapped+", '"+status+"', '"+modified_dt+"')";
-			stmt.execute(sql);
+			stmt2.execute(sql);
 			System.out.println("Closing database connection");
 		}
 		catch (SQLException err)
@@ -75,14 +76,14 @@ public class MySQLConnection {
 
 	public String insertMIIOperationData(String site, String shoporder, String sfc, String operation, String router,
 			String material, String workcenter, String qty_queue, String qty_work, String qty_complete,
-			String step_id) {
+			String step_id, Statement stmt2) {
 		String returnMsg = "" ;
 		String sql = "";
 		try
 		{
-			Statement stmt = getDBConnectionStatement();
+			//Statement stmt = getDBConnectionStatement();
 			sql = "INSERT OPERATION VALUES ('"+site+"', '"+shoporder+"', '"+sfc+"', '"+operation+"', '"+router+"', '"+material+"', '"+workcenter+"', "+qty_queue+", "+qty_work+" , "+qty_complete+", '"+step_id+"')";
-			stmt.execute(sql);
+			stmt2.execute(sql);
 			System.out.println("Closing database connection");
 		}
 		catch (SQLException err)
@@ -98,14 +99,14 @@ public class MySQLConnection {
 		return returnMsg;
 	}
 
-	public String insertMIISiteData(String site, String description, String time_zone) {
+	public String insertMIISiteData(String site, String description, String time_zone, Statement stmt2) {
 		String returnMsg = "" ;
 		String sql = "";
 		try
 		{
-			Statement stmt = getDBConnectionStatement();
+			//Statement stmt = getDBConnectionStatement();
 			sql = "INSERT SITE_MASTER VALUES ('"+site+"', '"+description+"', '"+time_zone+"')";
-			stmt.execute(sql);
+			stmt2.execute(sql);
 			System.out.println("Closing database connection");
 		}
 		catch (SQLException err)
@@ -122,14 +123,14 @@ public class MySQLConnection {
 	}
 
 	public String insertMIIResourceData(String site, String resource, String res_desc, String workcenter,
-			String wc_desc) {
+			String wc_desc, Statement stmt2) {
 		String returnMsg = "" ;
 		String sql = "";
 		try
 		{
-			Statement stmt = getDBConnectionStatement();
+			//Statement stmt = getDBConnectionStatement();
 			sql = "INSERT RESOURCE_MASTER VALUES ('"+site+"', '"+resource+"', '"+res_desc+"', '"+workcenter+"', '"+wc_desc+"')";
-			stmt.execute(sql);
+			stmt2.execute(sql);
 			System.out.println("Closing database connection");
 		}
 		catch (SQLException err)

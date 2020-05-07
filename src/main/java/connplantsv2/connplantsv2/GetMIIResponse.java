@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Statement;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,7 +22,7 @@ import org.xml.sax.SAXException;
 
 public class GetMIIResponse {
 
-	public String executeShopOrderGETService(String stringURL) throws IOException{
+	public String executeShopOrderGETService(String stringURL, Statement stmt) throws IOException{
 		String outValue = null;
 
 		URL url = new URL(stringURL);
@@ -88,7 +89,7 @@ public class GetMIIResponse {
 			String modified_dt = getCharacterDataFromElement(line);
 
 			MySQLConnection myserverCon = new MySQLConnection();
-			String returnMsg = myserverCon.insertMIIShopOrderData(site, shoporder, item, qty_to_build, qty_done, qty_scrapped, modified_dt, router, handle);
+			String returnMsg = myserverCon.insertMIIShopOrderData(site, shoporder, item, qty_to_build, qty_done, qty_scrapped, modified_dt, router, handle, stmt);
 
 
 			System.out.println("Data is inserted "+returnMsg);
@@ -97,7 +98,7 @@ public class GetMIIResponse {
 		return outValue;
 	}
 
-	public String executeSFCGETService(String stringURL) throws IOException{
+	public String executeSFCGETService(String stringURL, Statement stmt) throws IOException{
 		String outValue = null;
 
 		URL url = new URL(stringURL);
@@ -160,7 +161,7 @@ public class GetMIIResponse {
 			String modified_dt = getCharacterDataFromElement(line);
 
 			MySQLConnection myserverCon = new MySQLConnection();
-			String returnMsg = myserverCon.insertMIISFCData(site, shoporder, sfc, status, qty, qty_done, qty_scrapped, modified_dt );
+			String returnMsg = myserverCon.insertMIISFCData(site, shoporder, sfc, status, qty, qty_done, qty_scrapped, modified_dt, stmt);
 
 
 			System.out.println("Data is inserted "+returnMsg);
@@ -169,7 +170,7 @@ public class GetMIIResponse {
 		return outValue;
 	}
 
-	public String executeOperationService(String operationURL) throws IOException {
+	public String executeOperationService(String operationURL, Statement stmt) throws IOException {
 		String outValue = null;
 
 		URL url = new URL(operationURL);
@@ -245,7 +246,7 @@ public class GetMIIResponse {
 			
 			
 			MySQLConnection myserverCon = new MySQLConnection();
-			String returnMsg = myserverCon.insertMIIOperationData(site, shoporder, sfc, operation, router, material, workcenter, qty_queue, qty_work, qty_complete, step_id);
+			String returnMsg = myserverCon.insertMIIOperationData(site, shoporder, sfc, operation, router, material, workcenter, qty_queue, qty_work, qty_complete, step_id, stmt);
 
 
 			System.out.println("Data is inserted "+returnMsg);
@@ -254,7 +255,7 @@ public class GetMIIResponse {
 		return outValue;
 	}
 	
-	public String executeSiteService(String siteURL) throws IOException{
+	public String executeSiteService(String siteURL, Statement stmt) throws IOException{
 		String outValue = null;
 
 		URL url = new URL(siteURL);
@@ -297,7 +298,7 @@ public class GetMIIResponse {
 			String time_zone = getCharacterDataFromElement(line);
 
 			MySQLConnection myserverCon = new MySQLConnection();
-			String returnMsg = myserverCon.insertMIISiteData(site, description, time_zone);
+			String returnMsg = myserverCon.insertMIISiteData(site, description, time_zone, stmt);
 
 
 			System.out.println("Data is inserted "+returnMsg);
@@ -306,7 +307,7 @@ public class GetMIIResponse {
 		return outValue;
 	}
 	
-	public String executeResourceService(String resourceURL) throws IOException{
+	public String executeResourceService(String resourceURL, Statement stmt) throws IOException{
 		String outValue = null;
 
 		URL url = new URL(resourceURL);
@@ -357,7 +358,7 @@ public class GetMIIResponse {
 			String wc_desc = getCharacterDataFromElement(line);
 
 			MySQLConnection myserverCon = new MySQLConnection();
-			String returnMsg = myserverCon.insertMIIResourceData(site, resource, res_desc, workcenter, wc_desc);
+			String returnMsg = myserverCon.insertMIIResourceData(site, resource, res_desc, workcenter, wc_desc, stmt);
 
 
 			System.out.println("Data is inserted "+returnMsg);
