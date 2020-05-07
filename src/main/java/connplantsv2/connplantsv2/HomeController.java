@@ -37,80 +37,85 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 
 	Login login1 = new Login();
-	
+
 	@GetMapping
-    public String index() {
-      return "redirect:/login";
-    }
-	
+	public String index() {
+		return "redirect:/login";
+	}
+
 	@PostMapping("/welcome")
-    public String index1() {
-      return "welcome";
-    }
-	
+	public String index1() {
+		return "welcome";
+	}
+
 	@GetMapping("/login")
-	  public String loginForm(Model model) {
-	    model.addAttribute("login", new Login("9.220.9.130","50200","som","password@1"));
-	    return "login";
-	  }
-	
-	  @PostMapping("/login")
-	  public String loginSubmit(@ModelAttribute Login login) throws SQLException {
-		  login1 = login;
-		  
-		  String SOURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/ProductionOrder/SQL_GetShopOrderDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
-		  String SFCURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/SFC/SQL_GetSFCDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
-		  String OperationURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Runner?Transaction=Default/Som/OCP_ConnPlants/Operation/BLS_GetOrderOperationStepDetails&SITE="+login.getSite()+"&FROMDT=10/10/2019%2000:00:00&OutputParameter=XMLResult&Content-type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
-		  String SiteURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?QueryTemplate=Default/Som/OCP_ConnPlants/Site/SQL_GetSiteDetails&IsTesting=T&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
-		  String ResourceURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/Resource/SQL_GetResourceDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
-		  
-		  MySQLConnection mySqlConn = new MySQLConnection();
-		  Statement stmt = mySqlConn.getDBConnectionStatement();
-		  
-		  try {
-			login.setStringURL(new GetMIIResponse().executeShopOrderGETService(SOURL , stmt));
-			login.setStringURL(new GetMIIResponse().executeSFCGETService(SFCURL , stmt));
-			login.setStringURL(new GetMIIResponse().executeOperationService(OperationURL , stmt));
-			login.setStringURL(new GetMIIResponse().executeSiteService(SiteURL , stmt));
-			login.setStringURL(new GetMIIResponse().executeResourceService(ResourceURL , stmt));
-			
+	public String loginForm(Model model) {
+		model.addAttribute("login", new Login("9.220.9.130","50200","som","password@1", "1", "1", "1", "1", "1", "1"));
+		return "login";
+	}
+
+	@PostMapping("/login")
+	public String loginSubmit(@ModelAttribute Login login) throws SQLException {
+		login1 = login;
+
+		String SOURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/ProductionOrder/SQL_GetShopOrderDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
+		String SFCURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/SFC/SQL_GetSFCDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
+		String OperationURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Runner?Transaction=Default/Som/OCP_ConnPlants/Operation/BLS_GetOrderOperationStepDetails&SITE="+login.getSite()+"&FROMDT=10/10/2019%2000:00:00&OutputParameter=XMLResult&Content-type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
+		String SiteURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?QueryTemplate=Default/Som/OCP_ConnPlants/Site/SQL_GetSiteDetails&IsTesting=T&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
+		String ResourceURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/Resource/SQL_GetResourceDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
+
+		MySQLConnection mySqlConn = new MySQLConnection();
+		Statement stmt = mySqlConn.getDBConnectionStatement();
+
+		try {
+			if(login.getIsorder().equalsIgnoreCase("1"))
+				login.setStringURL(new GetMIIResponse().executeShopOrderGETService(SOURL , stmt));
+			if(login.getIssfc().equalsIgnoreCase("1"))
+				login.setStringURL(new GetMIIResponse().executeSFCGETService(SFCURL , stmt));
+			if(login.getIsoperation().equalsIgnoreCase("1"))
+				login.setStringURL(new GetMIIResponse().executeOperationService(OperationURL , stmt));
+			if(login.getIssite().equalsIgnoreCase("1"))
+				login.setStringURL(new GetMIIResponse().executeSiteService(SiteURL , stmt));
+			if(login.getIsresource().equalsIgnoreCase("1"))
+				login.setStringURL(new GetMIIResponse().executeResourceService(ResourceURL , stmt));
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		  
-		  return "welcome";
-	  }
-	  
-	  
-	 /* @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+
+		return "welcome";
+	}
+
+
+	/* @RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	    public String ipaddress(@PathVariable("id") String id) throws Exception {
 	        return "Reply: " + id;
 	    }
-	  */
-	  
-	  @PostMapping("/display")
-	    public String getMIISchJob(@ModelAttribute Login login, Model model) {
-	      
-		  List<MIISchJob> listMIISchJobs = new ArrayList<MIISchJob>();
-		  
-		  //DisplayMIISchJob displayMIIjob = new DisplayMIISchJob();
-		  ShowMIISchJobList displayMIIjob = new ShowMIISchJobList();
-		  try {
+	 */
+
+	@PostMapping("/display")
+	public String getMIISchJob(@ModelAttribute Login login, Model model) {
+
+		List<MIISchJob> listMIISchJobs = new ArrayList<MIISchJob>();
+
+		//DisplayMIISchJob displayMIIjob = new DisplayMIISchJob();
+		ShowMIISchJobList displayMIIjob = new ShowMIISchJobList();
+		try {
 			displayMIIjob.displayMIISchJobs(listMIISchJobs, login.getSite());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		  
-		  model.addAttribute("miischjobs", listMIISchJobs);
-	        
-	      return "display";
-	    }
-	  
-	  @PostConstruct
-	    public void init() throws Exception {
-		  
+
+		model.addAttribute("miischjobs", listMIISchJobs);
+
+		return "display";
+	}
+
+	@PostConstruct
+	public void init() throws Exception {
+
 		/*
 		 * List<MIISchJob> listMIISchJobs = new ArrayList<MIISchJob>();
 		 * 
@@ -118,9 +123,9 @@ public class HomeController {
 		 * displayMIIjob = new ShowMIISchJobList();
 		 * displayMIIjob.displayMIISchJobs(listMIISchJobs);
 		 */
-		  
-	  }
-	  
 
-	   
+	}
+
+
+
 }
