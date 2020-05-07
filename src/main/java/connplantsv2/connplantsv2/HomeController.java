@@ -50,7 +50,7 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	  public String loginForm(Model model) {
-	    model.addAttribute("login", new Login());
+	    model.addAttribute("login", new Login("9.220.9.130","50200","som","password@1"));
 	    return "login";
 	  }
 	

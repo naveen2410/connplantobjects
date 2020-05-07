@@ -10,6 +10,19 @@ public class Login {
 	private String stringURL;
 	
 
+	
+	public Login() {}
+	
+	
+	public Login(String ip, String port, String user, String password) {
+		super();
+		this.ip = ip;
+		this.port = port;
+		this.user = user;
+		this.password = password;
+	}
+	
+	
 	public String getSite() {
 		return site;
 	}
