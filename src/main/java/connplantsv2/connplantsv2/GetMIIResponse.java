@@ -368,6 +368,74 @@ public class GetMIIResponse {
 	}
 
 
+	public String executeResourceTimeLogService(String resTimeLogURL, Statement stmt) throws IOException{
+		String outValue = null;
+
+		URL url = new URL(resTimeLogURL);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		InputStream in = conn.getInputStream();
+
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Document doc = null;
+		try {
+			doc = (Document) db.parse(in);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		NodeList nodes = ((org.w3c.dom.Document) doc).getElementsByTagName("Row");
+
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Element element = (Element) nodes.item(i);
+
+			NodeList nl = element.getElementsByTagName("SITE");
+			Element line = (Element) nl.item(0);
+			String site = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("RESOURCE_BO");
+			line = (Element) nl.item(0);
+			String resource = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("RES_DESC");
+			line = (Element) nl.item(0);
+			String res_desc = getCharacterDataFromElement(line);
+			
+			nl = element.getElementsByTagName("START_DATE_TIME");
+			line = (Element) nl.item(0);
+			String startDT = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("END_DATE_TIME");
+			line = (Element) nl.item(0);
+			String endDT = getCharacterDataFromElement(line);
+			
+			nl = element.getElementsByTagName("RESOURCE_STATUS_BO");
+			line = (Element) nl.item(0);
+			String resourceStatus = getCharacterDataFromElement(line);
+
+			nl = element.getElementsByTagName("STATUS_DESC");
+			line = (Element) nl.item(0);
+			String status_desc = getCharacterDataFromElement(line);
+
+			MySQLConnection myserverCon = new MySQLConnection();
+			String returnMsg = myserverCon.insertMIIResourceTimeLogData(site, resource, res_desc, startDT, endDT, resourceStatus, status_desc, stmt);
+
+
+			System.out.println("Data is inserted "+returnMsg);
+		}
+
+		return outValue;
+	}
+	
 	public static String getCharacterDataFromElement(Element e) {
 		Node child = e.getFirstChild();
 		if (child instanceof CharacterData) {
@@ -377,6 +445,8 @@ public class GetMIIResponse {
 		}
 		return "?";
 	}
+
+	
 
 
 

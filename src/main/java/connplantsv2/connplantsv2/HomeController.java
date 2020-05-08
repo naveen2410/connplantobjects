@@ -50,7 +50,7 @@ public class HomeController {
 
 	@GetMapping("/login")
 	public String loginForm(Model model) {
-		model.addAttribute("login", new Login("9.220.9.130","50200","som","password@1", "1", "1", "1", "1", "1", "1"));
+		model.addAttribute("login", new Login("9.220.9.130","50200","som","password@1", "1", "1", "1", "1", "1", "0"));
 		return "login";
 	}
 
@@ -63,7 +63,8 @@ public class HomeController {
 		String OperationURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Runner?Transaction=Default/Som/OCP_ConnPlants/Operation/BLS_GetOrderOperationStepDetails&SITE="+login.getSite()+"&FROMDT=10/10/2019%2000:00:00&OutputParameter=XMLResult&Content-type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
 		String SiteURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?QueryTemplate=Default/Som/OCP_ConnPlants/Site/SQL_GetSiteDetails&IsTesting=T&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword();
 		String ResourceURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/Resource/SQL_GetResourceDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
-
+		String ResTimeLogURL = "http://"+login.getIp()+":"+login.getPort()+"/XMII/Illuminator?IsTesting=T&QueryTemplate=Default/Som/OCP_ConnPlants/Resource/SQL_GetResourceTimeLogDetails&Content-Type=text/xml&IllumLoginName="+login.getUser()+"&IllumLoginPassword="+login.getPassword()+"&Param.1="+login.getSite();
+		
 		MySQLConnection mySqlConn = new MySQLConnection();
 		Statement stmt = mySqlConn.getDBConnectionStatement();
 
@@ -78,6 +79,8 @@ public class HomeController {
 				login.setStringURL(new GetMIIResponse().executeSiteService(SiteURL , stmt));
 			if(login.getIsresource().equalsIgnoreCase("1"))
 				login.setStringURL(new GetMIIResponse().executeResourceService(ResourceURL , stmt));
+			if(login.getIsrestimelog().equalsIgnoreCase("1"))
+				login.setStringURL(new GetMIIResponse().executeResourceTimeLogService(ResTimeLogURL , stmt));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

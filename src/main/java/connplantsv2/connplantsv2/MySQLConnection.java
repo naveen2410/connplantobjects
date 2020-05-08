@@ -146,4 +146,28 @@ public class MySQLConnection {
 		return returnMsg;
 	}
 
+	public String insertMIIResourceTimeLogData(String site, String resource, String res_desc, String startDT,
+			String endDT, String resourceStatus, String status_desc, Statement stmt2) {
+		String returnMsg = "" ;
+		String sql = "";
+		try
+		{
+			//Statement stmt = getDBConnectionStatement();
+			sql = "INSERT RESOURCE_TIME_LOG VALUES ('"+site+"', '"+resource+"', '"+res_desc+"', '"+startDT+"', '"+endDT+"', '"+resourceStatus+"', '"+status_desc+"')";
+			stmt2.execute(sql);
+			System.out.println("Closing database connection");
+		}
+		catch (SQLException err)
+		{
+			System.err.println("Error connecting to the database");
+			returnMsg = "ERROR " + sql;
+			err.printStackTrace(System.err);
+			return returnMsg;
+			// System.exit(0);
+		}
+		returnMsg = "SUCCESS";
+		System.out.println("Program finished");
+		return returnMsg;
+	}
+
 }
